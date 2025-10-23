@@ -8,7 +8,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
-//import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -33,7 +32,6 @@ fun SpotDetailScreen(
     val mapState by mapViewModel.mapState.collectAsState()
     val spot = mapState.selectedSpotDetails
     val comments = mapState.spotComments
-    // --- PROMENA: Više ne koristimo lokalni state, već onaj iz ViewModel-a ---
     val userRating = mapState.userRatingForSelectedSpot
     var commentText by remember { mutableStateOf("") }
 
@@ -61,7 +59,6 @@ fun SpotDetailScreen(
                     Text(spot.description.ifBlank { "Nema opisa." })
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // --- NOVI DEO: PRIKAZ AUTORA ---
                     Text("Dodao/la", style = MaterialTheme.typography.titleMedium)
                     Text(spot.authorName)
                     Spacer(modifier = Modifier.height(16.dp))
@@ -70,7 +67,6 @@ fun SpotDetailScreen(
                     Text(spot.wasteTypes.joinToString(", ") { type -> WasteType.valueOf(type).displayName })
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Prikaz prosečne ocene
                     Text("Prosečna ocena", style = MaterialTheme.typography.titleMedium)
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(String.format("%.1f", spot.averageRating), fontWeight = FontWeight.Bold, fontSize = 20.sp)
@@ -88,9 +84,6 @@ fun SpotDetailScreen(
                                 contentDescription = "Ocena $index",
                                 tint = Color.Yellow,
                                 modifier = Modifier.clickable {
-                                    // VAŽNA ISPRAVKA: Prosleđujemo 'index', a ne 'userRating'
-                                    // jer 'userRating' možda još nije ažuriran u ovom trenutku.
-                                    // Više ne menjamo lokalni userRating, samo pozivamo ViewModel
                                     mapViewModel.addRating(spot.id, index)
                                 }
                             )
@@ -112,7 +105,7 @@ fun SpotDetailScreen(
                         onClick = {
                             if (commentText.isNotBlank()) {
                                 mapViewModel.addComment(spot.id, commentText)
-                                commentText = "" // Očisti polje nakon slanja
+                                commentText = "" 
                             }
                         },
                         modifier = Modifier.padding(top = 8.dp)
