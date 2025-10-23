@@ -24,19 +24,18 @@ class MainActivity : ComponentActivity() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
-        // Možete dodati logiku ako je dozvola odbijena
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        NotificationHelper.createNotificationChannel(this) // Kreiramo kanal
-        askNotificationPermission() // Tražimo dozvolu
+        NotificationHelper.createNotificationChannel(this)
+        askNotificationPermission() 
 
         enableEdgeToEdge()
         setContent {
             EcoSpotTheme {
-                AppNavigation() // Ovde pozivamo našu navigaciju
+                AppNavigation()
             }
         }
     }
