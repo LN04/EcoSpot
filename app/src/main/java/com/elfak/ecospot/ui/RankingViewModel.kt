@@ -41,8 +41,7 @@ class RankingViewModel : ViewModel() {
 
             } catch (e: Exception) {
                 Log.e("RankingViewModel", "Error fetching users", e)
-                _rankingState.value = _rankingState.value.copy(isLoading = false)
-                // Ovde bismo mogli dodati i stanje greške
+                _rankingState.value = _rankingState.value.copy(isLoading = false)                
             }
         }
     }
