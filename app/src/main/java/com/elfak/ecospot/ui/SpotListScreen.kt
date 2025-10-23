@@ -45,8 +45,7 @@ fun SpotListScreen(
                 item { Text("Nema rezultata za izabrane filtere.") }
             } else {
                 items(filteredSpots, key = { it.id }) { spot ->
-                    SpotListItem(spot = spot, onClick = {
-                        // Klikom na stavku, idemo na detalje
+                    SpotListItem(spot = spot, onClick = {                        
                         navController.navigate(Routes.SPOT_DETAIL_ROUTE.replace("{spotId}", spot.id))
                     })
                 }
@@ -67,7 +66,6 @@ fun SpotListItem(spot: RecyclingSpot, onClick: () -> Unit) {
             Text(spot.name, style = MaterialTheme.typography.titleMedium)
             Spacer(Modifier.height(4.dp))
 
-            // --- NOVI DEO: Prikaz imena autora ---
             Text(
                 "Autor: ${spot.authorName}",
                 style = MaterialTheme.typography.bodyMedium,
